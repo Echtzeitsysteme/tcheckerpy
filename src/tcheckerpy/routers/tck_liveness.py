@@ -27,8 +27,8 @@ async def liveness(body: TckLivenessBody = Body(...)):
         temp_file.write(body.sysdecl.encode('utf-8'))
         temp_file_path = temp_file.name
         
-    print(temp_file_path)
-    print(body.labels)
+    # print(temp_file_path)
+    # print(body.labels)
 
 
     # Call the TChecker liveness function with following definition:
@@ -50,6 +50,6 @@ async def liveness(body: TckLivenessBody = Body(...)):
         "stats": output,
         "certificate": result
     }
-    print("Output: " + output)
+    # print("Output: " + output)
     
     return resultMap

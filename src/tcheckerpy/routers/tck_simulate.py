@@ -41,8 +41,8 @@ async def simulate_tck(
     #remove last newline character and quotes from result
     result = result.strip()
 
-    print("Output: " + output)
-    print("Result: " + result)
+    # print("Output: " + output)
+    # print("Result: " + result)
 
 
     return Response(content=result, media_type="application/json")

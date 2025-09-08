@@ -25,8 +25,8 @@ async def reach(body: TckReachBody = Body(...)):
         temp_file.write(body.sysdecl.encode('utf-8'))
         temp_file_path = temp_file.name
         
-    print(temp_file_path)
-    print(body.labels)
+    # print(temp_file_path)
+    # print(body.labels)
 
     # Call the TChecker reachability function with following definition:
     # void tck_reach(const char * output_filename, const char * sysdecl_filename, const char * labels,
@@ -48,6 +48,6 @@ async def reach(body: TckReachBody = Body(...)):
         "stats": output,
         "certificate": result
     }
-    print("Output: " + output)
+    # print("Output: " + output)
     
     return resultMap

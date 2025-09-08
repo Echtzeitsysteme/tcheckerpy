@@ -16,7 +16,7 @@ def check(body: str = Body(...)):
         temp_file.write(body.encode('utf-8'))
         temp_file_path = temp_file.name
         
-    print(temp_file_path)
+    # print(temp_file_path)
 
 
 
@@ -88,7 +88,7 @@ def to_json(body: str = Body(...)):
         args=[temp_file_path]
     )
 
-    print(output)
+    # print(output)
     # Cleanup
     os.remove(temp_file_path)
         

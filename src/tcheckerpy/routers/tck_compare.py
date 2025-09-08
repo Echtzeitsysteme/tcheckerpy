@@ -49,6 +49,6 @@ async def compare(body: TckCompareBody = Body(...)):
     resultMap = {
         "stats": output,
     }
-    print("Output: " + output)
+    # print("Output: " + output)
     
     return resultMap
