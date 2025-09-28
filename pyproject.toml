@@ -7,6 +7,8 @@ name = "tcheckerpy"
 version = "0.0.1"
 authors = [
   { name="Alexander Lieb", email="alexander.lieb@online.de" },
+  { name="Jacob Deuchert", email="jacob.deuchert@stud.tu-darmstadt.de"},
+  { name="Paula Troszt", email="paula.troszt@gmx.de" }
 ]
 description = "A Python Interface for TChecker"
 readme = "README.md"
