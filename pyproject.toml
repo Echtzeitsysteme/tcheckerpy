@@ -1,10 +1,16 @@
 [build-system]
-requires = ["setuptools >= 77.0.3"]
+requires = ["setuptools >= 77.0.3", "setuptools-git-versioning>=2.0,<3"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools-git-versioning]
+enabled = true
+template = "{timestamp:%Y.%m.%d}"
+dev_template = "{timestamp:%Y.%m.%d}"
+dirty_template = "{timestamp:%Y.%m.%d}"
 
 [project]
 name = "tcheckerpy"
-version = "0.0.1"
+dynamic = ["version"]
 authors = [
   { name="Alexander Lieb", email="alexander.lieb@online.de" },
   { name="Jacob Deuchert", email="jacob.deuchert@stud.tu-darmstadt.de"},
