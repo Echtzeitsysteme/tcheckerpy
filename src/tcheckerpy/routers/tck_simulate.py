@@ -19,6 +19,9 @@ class TCKSimulationRequest(BaseModel):
 async def simulate_tck(
     body: TCKSimulationRequest = Body(..., description="Request body for TCK simulation")
 ):
+    
+    # TODO: json!
+
     if not body.sysdecl:
         raise HTTPException(status_code=422, detail="sysdecl cannot be empty")
 

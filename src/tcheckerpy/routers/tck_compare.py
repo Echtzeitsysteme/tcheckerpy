@@ -16,7 +16,7 @@ def compare(first_sys_decl: str, second_sys_decl: str, relationship: Relationshi
         temp_file_path_second_sysdecl  = temp_file_second_sysdecl.name
         
     # call TChecker function
-    output, _ = call_tchecker.call_tchecker_function_in_new_process(
+    stats, _ = call_tchecker.call_tchecker_function_in_new_process(
         func_name="tck_compare",
         argtypes=["ctypes.c_char_p", "ctypes.c_char_p", "ctypes.c_int", 
                   "ctypes.POINTER(ctypes.c_int)", "ctypes.POINTER(ctypes.c_int)"],
@@ -25,4 +25,4 @@ def compare(first_sys_decl: str, second_sys_decl: str, relationship: Relationshi
               relationship.value, block_size, table_size]
     )
 
-    return "RELATIONSHIP_FULFILLED true" in output, output
+    return "RELATIONSHIP_FULFILLED true" in stats, stats
