@@ -1,5 +1,4 @@
 import tempfile
-import os
 from tcheckerpy.utils import call_tchecker
 
 def __call_tck_syntax(sys_decl: str, func_name: str, process_name: str | None = None):
@@ -17,9 +16,6 @@ def __call_tck_syntax(sys_decl: str, func_name: str, process_name: str | None = 
         has_result = True,
         args = [temp_file_path, process_name] if product else [temp_file_path]
     )
-
-    # cleanup
-    os.remove(temp_file_path)
 
     return result
 

@@ -1,54 +1,28 @@
-import ctypes
 import tempfile
-import os
-from typing import Optional
-from fastapi import APIRouter, Body, HTTPException
-from pydantic import BaseModel
+from enum import Enum
 from tcheckerpy.utils import call_tchecker
-import asyncio
 
-router = APIRouter(prefix="/tck_compare", tags=["tck_compare"])
+class Relationship(Enum):
+    STRONG_TIMED_BISIM = 0
 
-
-class TckCompareBody(BaseModel):
-    first_sysdecl: str
-    second_sysdecl: str
-    relationship: int
-    block_size: Optional[int] = None
-    table_size: Optional[int] = None
-
-@router.put("")
-async def compare(body: TckCompareBody = Body(...)):
-
-    if not body or not body.first_sysdecl or not body.second_sysdecl:
-        raise HTTPException(status_code=422, detail="Request body and sysdecls cannot be empty")
+def compare(first_sys_decl: str, second_sys_decl: str, relationship: Relationship, 
+            block_size: int | None = None, table_size: int | None = None):
     
     with tempfile.NamedTemporaryFile(delete=False) as temp_file_first_sysdecl:
-        temp_file_first_sysdecl.write(body.first_sysdecl.encode('utf-8'))
+        temp_file_first_sysdecl.write(first_sys_decl.encode('utf-8'))
         temp_file_path_first_sysdecl = temp_file_first_sysdecl.name
     with tempfile.NamedTemporaryFile(delete=False) as temp_file_second_sysdecl:
-        temp_file_second_sysdecl.write(body.second_sysdecl.encode('utf-8'))
+        temp_file_second_sysdecl.write(second_sys_decl.encode('utf-8'))
         temp_file_path_second_sysdecl  = temp_file_second_sysdecl.name
         
-    
-    # Call the TChecker compare function with following definition:
-    # void tck_compare(const char * output_filename, const char * first_sysdecl_filename, const char * second_sysdecl_filename,
-    #              tck_compare_relationship_t relationship, int * block_size, int * table_size);
-    # output_filename is not included in the argtypes as it is set by the call function when has_result=True
-    output, result = call_tchecker.call_tchecker_function_in_new_process(
+    # call TChecker function
+    output, _ = call_tchecker.call_tchecker_function_in_new_process(
         func_name="tck_compare",
-        argtypes=["ctypes.c_char_p", "ctypes.c_char_p", "ctypes.c_int", "ctypes.POINTER(ctypes.c_int)", "ctypes.POINTER(ctypes.c_int)"],
+        argtypes=["ctypes.c_char_p", "ctypes.c_char_p", "ctypes.c_int", 
+                  "ctypes.POINTER(ctypes.c_int)", "ctypes.POINTER(ctypes.c_int)"],
         has_result=True,
-        args=[temp_file_path_first_sysdecl, temp_file_path_second_sysdecl, body.relationship, body.block_size, body.table_size]
+        args=[temp_file_path_first_sysdecl, temp_file_path_second_sysdecl, 
+              relationship.value, block_size, table_size]
     )
 
-    # Cleanup
-    os.remove(temp_file_path_first_sysdecl)
-    os.remove(temp_file_path_second_sysdecl)
-
-    resultMap = {
-        "stats": output,
-    }
-    # print("Output: " + output)
-    
-    return resultMap
+    return "RELATIONSHIP_FULFILLED true" in output, output

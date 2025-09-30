@@ -15,14 +15,8 @@ with open(os.path.join(test_systems_path, "ad94_product.tck")) as file:
     product = file.read()
 
 def test_tck_compare():
-    body = tck_compare.TckCompareBody(
-        first_sysdecl=system,
-        second_sysdecl=system,
-        relationship=0
-    )
-
-    result = asyncio.run(tck_compare.compare(body))
-    assert "RELATIONSHIP_FULFILLED true" in result["stats"]
+    result, _ = tck_compare.compare(system, system, tck_compare.Relationship.STRONG_TIMED_BISIM)
+    assert result
 
 def test_tck_liveness():
     body = tck_liveness.TckLivenessBody(

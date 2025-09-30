@@ -21,7 +21,6 @@ def call_tchecker_function_in_new_process(
     and result (parsed from the final line).
     """
 
-    result_filename = None
     # If the function has a result the result gets written to a file with the file name passed as the first argument
     if has_result:
         # Create a temporary file to store the result
@@ -54,10 +53,8 @@ def call_tchecker_function_in_new_process(
         raise RuntimeError(f"Child process failed: {proc.stderr.strip()} {proc.returncode}")
 
     result = None
-    if result_filename:
+    if has_result:
         with open(result_filename, "r") as result_file:
             result = result_file.read()
-        # Remove the temporary file
-        os.remove(result_filename)
 
     return proc.stdout, result
