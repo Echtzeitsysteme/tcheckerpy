@@ -15,25 +15,15 @@ with open(os.path.join(test_systems_path, "ad94_product.tck")) as file:
     product = file.read()
 
 def test_tck_compare():
-    assert tck_compare.compare(system, system, tck_compare.Relationship.STRONG_TIMED_BISIM)[0]
+    assert tck_compare.compare(system, system)[0]
 
 def test_tck_liveness():
-    result = tck_liveness.liveness(system, [], tck_liveness.Algorithm.COUVSCC, tck_liveness.Certificate.NONE)
+    result = tck_liveness.liveness(system, tck_liveness.Algorithm.COUVSCC)
     assert result[0]
     assert result[2] == ""
 
 def test_tck_reach():
-    body = tck_reach.TckReachBody(
-        sysdecl=system, 
-        labels="", 
-        algorithm=0,
-        search_order="bfs",
-        certificate=0
-    )
-
-    result = asyncio.run(tck_reach.reach(body))
-    assert "REACHABLE false" in result["stats"]
-    assert not result["certificate"] == ""
+    assert not tck_reach.reach(system, tck_reach.Algorithm.COUVSCC)[0]
 
 def test_tck_simulate():
     body = tck_simulate.TCKSimulationRequest(

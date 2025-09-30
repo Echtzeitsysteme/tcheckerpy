@@ -5,7 +5,7 @@ from tcheckerpy.utils import call_tchecker
 class Relationship(Enum):
     STRONG_TIMED_BISIM = 0
 
-def compare(first_sys_decl: str, second_sys_decl: str, relationship: Relationship, 
+def compare(first_sys_decl: str, second_sys_decl: str, relationship: Relationship = Relationship.STRONG_TIMED_BISIM, 
             block_size: int | None = None, table_size: int | None = None):
     
     with tempfile.NamedTemporaryFile(delete=False) as temp_file_first_sysdecl:

@@ -11,8 +11,8 @@ class Certificate(Enum):
     SYMBOLIC = 1
     NONE = 2
 
-def liveness(sys_decl: str, labels: list[str], algorithm: Algorithm, certificate = Certificate,
-                   block_size: int | None = None, table_size: int | None = None):
+def liveness(sys_decl: str, algorithm: Algorithm, certificate: Certificate = Certificate.NONE, 
+             labels: list[str] = [], block_size: int | None = None, table_size: int | None = None):
 
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         temp_file.write(sys_decl.encode('utf-8'))
@@ -22,11 +22,13 @@ def liveness(sys_decl: str, labels: list[str], algorithm: Algorithm, certificate
     labels_str = ", ".join(labels)
 
     # call the TChecker function
-    stats, certificate = call_tchecker.call_tchecker_function_in_new_process(
+    stats, cert = call_tchecker.call_tchecker_function_in_new_process(
         func_name="tck_liveness",
-        argtypes=["ctypes.c_char_p", "ctypes.c_char_p", "ctypes.c_int", "ctypes.c_int", "ctypes.POINTER(ctypes.c_int)", "ctypes.POINTER(ctypes.c_int)"],
+        argtypes=["ctypes.c_char_p", "ctypes.c_char_p", "ctypes.c_int", "ctypes.c_int",
+                  "ctypes.POINTER(ctypes.c_int)", "ctypes.POINTER(ctypes.c_int)"],
         has_result=True,
-        args=[temp_file_path, labels_str, algorithm.value, certificate.value, block_size, table_size]
+        args=[temp_file_path, labels_str, algorithm.value, certificate.value,
+              block_size, table_size]
     )
 
-    return "CYCLE false" in stats, stats, certificate
+    return "CYCLE false" in stats, stats, cert
