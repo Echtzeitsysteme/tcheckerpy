@@ -1,0 +1,22 @@
+digraph ad94_fig10 {
+  subgraph cluster_P {
+    label="P";
+    P_l0[label="l0", initial=""];
+    P_l1[label="l1"];
+    P_l2[label="l2"];
+    P_l3[label="l3", labels="green"];
+    P_l0 -> P_l1[label="a", do="y=0"];
+    P_l1 -> P_l2[label="b", provided="y==1"];
+    P_l1 -> P_l3[label="c", provided="x<1"];
+    P_l2 -> P_l3[label="c", provided="x<1"];
+    P_l3 -> P_l1[label="a", provided="y<1", do="y=0"];
+    P_l3 -> P_l3[label="d", provided="x>1"];
+  }
+  subgraph cluster_synchronizations {
+    label="Synchronizations";
+    node[shape="none"];
+    "
+    ";
+  }
+}
+

@@ -1,0 +1,18 @@
+system:ad94_fig10
+event:P_a
+event:P_b
+event:P_c
+event:P_d
+clock:1:x
+clock:1:y
+process:P
+location:P:l0{initial:}
+location:P:l1
+location:P:l2
+location:P:l3{labels:green}
+edge:P:l0:l1:P_a{do:y=0}
+edge:P:l1:l2:P_b{provided:y==1}
+edge:P:l1:l3:P_c{provided:x<1}
+edge:P:l3:l1:P_a{do:y=0 : provided:y<1}
+edge:P:l3:l3:P_d{provided:x>1}
+edge:P:l2:l3:P_c{provided:x<1}

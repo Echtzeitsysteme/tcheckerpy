@@ -2,7 +2,6 @@ import subprocess
 import os
 import sys
 import json
-import ast
 from typing import List, Tuple, Any
 import tempfile
 from typing import Optional
@@ -28,7 +27,6 @@ def call_tchecker_function_in_new_process(
         # Create a temporary file to store the result
         with tempfile.NamedTemporaryFile(delete=False) as temp_file:
             result_filename = temp_file.name
-            # print(f"Temporary file created: {result_filename}")
             args = [result_filename] + args
             argtypes = ["ctypes.c_char_p"] + argtypes
 
@@ -55,13 +53,11 @@ def call_tchecker_function_in_new_process(
         print(f"Error calling tchecker function: {proc.stderr.strip()}")
         raise RuntimeError(f"Child process failed: {proc.stderr.strip()} {proc.returncode}")
 
-    # print(proc.stderr.strip())
     result = None
     if result_filename:
-        # print(f"Reading result from: {result_filename}")
         with open(result_filename, "r") as result_file:
             result = result_file.read()
         # Remove the temporary file
-        # os.remove(result_filename)
+        os.remove(result_filename)
 
     return proc.stdout, result

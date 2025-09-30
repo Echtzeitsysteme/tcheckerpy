@@ -2,8 +2,6 @@
 import ctypes
 import json
 import argparse
-import ast
-import sys
 
 def main():
     parser = argparse.ArgumentParser(
@@ -22,12 +20,12 @@ def main():
     parser.add_argument(
         "--argtypes", "-a",
         required=True,
-        help="JSON‑encoded list of ctypes type names, e.g. '[\"ctypes.c_int\", \"ctypes.c_double\"]'"
+        help="JSON-encoded list of ctypes type names, e.g. '[\"ctypes.c_int\", \"ctypes.c_double\"]'"
     )
     parser.add_argument(
         "--args", "-A",
         required=True,
-        help="JSON‑encoded list of argument values"
+        help="JSON-encoded list of argument values"
     )
     opts = parser.parse_args()
 
@@ -55,7 +53,6 @@ def main():
                 py_args[idx] = ctypes.pointer(ctypes.c_int(val))
             elif isinstance(val, list):
                 py_args[idx] = (ctypes.c_int * len(val))(*val)
-
 
     # 5) call it (any C‑side prints still go to stdout)
     func(*py_args)

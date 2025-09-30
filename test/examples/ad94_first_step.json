@@ -1,0 +1,1 @@
+{"initial":[{"status":1,"state":{"intval":"","labels":"","vloc":"<l0>","zone":"(x==0 && y==0 && x==y)"},"transition":{"guard":"","reset":"","src_invariant":"","sync":"","tgt_invariant":"","vedge":"<>"}}]}

@@ -1,0 +1,89 @@
+{
+  "name" : "ad94_fig10",
+  "processes" : [
+    {
+      "pid" : "P",
+      "locations" : [
+        {
+          "id" : "P_l0",
+          "attributes" : {
+            "label" : "l0",
+            "initial" : ""            
+          }
+        },
+        {
+          "id" : "P_l1",
+          "attributes" : {
+            "label" : "l1"            
+          }
+        },
+        {
+          "id" : "P_l2",
+          "attributes" : {
+            "label" : "l2"            
+          }
+        },
+        {
+          "id" : "P_l3",
+          "attributes" : {
+            "label" : "l3",
+            "labels" : "green"            
+          }
+        }
+      ],
+      "edges" : [
+        {
+          "src" : "P_l0",
+          "tgt" : "P_l1",
+          "attributes" : {
+            "label" : "a",
+            "do" : "y=0"            
+          }
+        },
+        {
+          "src" : "P_l1",
+          "tgt" : "P_l2",
+          "attributes" : {
+            "label" : "b",
+            "provided" : "y==1"            
+          }
+        },
+        {
+          "src" : "P_l1",
+          "tgt" : "P_l3",
+          "attributes" : {
+            "label" : "c",
+            "provided" : "x<1"            
+          }
+        },
+        {
+          "src" : "P_l2",
+          "tgt" : "P_l3",
+          "attributes" : {
+            "label" : "c",
+            "provided" : "x<1"            
+          }
+        },
+        {
+          "src" : "P_l3",
+          "tgt" : "P_l1",
+          "attributes" : {
+            "label" : "a",
+            "provided" : "y<1",
+            "do" : "y=0"            
+          }
+        },
+        {
+          "src" : "P_l3",
+          "tgt" : "P_l3",
+          "attributes" : {
+            "label" : "d",
+            "provided" : "x>1"            
+          }
+        }
+      ]
+    }
+  ],
+  "sync" : [
+  ]
+}
