@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tcheckerpy"
-version = "1.0"
+version = "2025.10.2"
 authors = [
   { name="Alexander Lieb", email="alexander.lieb@online.de" },
   { name="Jacob Deuchert", email="jacob.deuchert@stud.tu-darmstadt.de"},
@@ -26,4 +26,4 @@ Homepage = "https://github.com/Echtzeitsysteme/tcheckerpy"
 Issues = "https://github.com/Echtzeitsysteme/tcheckerpy/issues"
 
 [tool.setuptools.package-data]
-tcheckerpy = ["*.so"]
+tcheckerpy = ["libtchecker.so"]
