@@ -25,7 +25,7 @@ Homepage = "https://github.com/Echtzeitsysteme/tcheckerpy"
 Issues = "https://github.com/Echtzeitsysteme/tcheckerpy/issues"
 
 [tool.setuptools.package-data]
-tcheckerpy = ["*.so"]
+tcheckerpy = ["libtchecker.so"]
 
 [tool.pytest.ini_options]
 minversion = 6.0
