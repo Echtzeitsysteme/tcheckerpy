@@ -1,5 +1,4 @@
 from tcheckerpy.routers import tck_compare, tck_liveness, tck_reach, tck_simulate, tck_syntax
-import asyncio
 import os
 
 test_systems_path = os.path.join(os.path.dirname(__file__), "examples")
@@ -26,14 +25,7 @@ def test_tck_reach():
     assert not tck_reach.reach(system, tck_reach.Algorithm.COUVSCC)[0]
 
 def test_tck_simulate():
-    body = tck_simulate.TCKSimulationRequest(
-        sysdecl=system,
-        simulation_type=1
-    )
-
-    result = asyncio.run(tck_simulate.simulate_tck(body))
-    assert result.body.decode().strip() == first_step
-
+    assert tck_simulate.simulate_tck(system, simulation_type=tck_simulate.SimulationType.ONESTEP) == first_step
 
 def test_tck_syntax():
     tck_syntax.check(system)

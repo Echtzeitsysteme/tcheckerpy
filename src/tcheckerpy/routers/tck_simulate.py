@@ -1,54 +1,33 @@
 import tempfile
-from typing import Optional
-from fastapi import APIRouter, Body, HTTPException, Response
-from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from enum import Enum
 from tcheckerpy.utils import call_tchecker
 
-router = APIRouter(prefix="/tck_simulate", tags=["tck_simulate"])
+class SimulationType(Enum):
+    # INTERACTIVE = 0
+    ONESTEP = 1
+    RANDOMIZED = 2
 
-
-class TCKSimulationRequest(BaseModel):
-    sysdecl: str
-    simulation_type: int
-    starting_state: Optional[str] = None
-    nsteps: Optional[int] = None
-
-
-@router.put("/simulate")
-async def simulate_tck(
-    body: TCKSimulationRequest = Body(..., description="Request body for TCK simulation")
-):
+def simulate_tck(sys_decl: str, simulation_type: SimulationType,
+                 starting_state: str | None = None, nsteps: int | None = None):
     
-    # TODO: json!
-
-    if not body.sysdecl:
-        raise HTTPException(status_code=422, detail="sysdecl cannot be empty")
-
+    if simulation_type == SimulationType.RANDOMIZED and nsteps == None:
+        raise ValueError("Randomized simulation requires number of steps")
+    
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-        temp_file.write(body.sysdecl.encode('utf-8'))
+        temp_file.write(sys_decl.encode('utf-8'))
         temp_file_path = temp_file.name
 
-    # Call the TChecker simulation function with following definition:
-    # void tck_simulate(const char * output_filename, const char * sysdecl_filename, simulation_type_t simulation_type,
-    #                   const tchecker::simulate::display_type_t display_type, const char * starting_state_attributes, int nsteps,
-    #                   bool output_trace);  
-    # output_filename is set by the call function when has_result=True
-
-    output, result = call_tchecker.call_tchecker_function_in_new_process(
+    # call TChecker function
+    _, result = call_tchecker.call_tchecker_function_in_new_process(
         func_name="tck_simulate",
-        argtypes=["ctypes.c_char_p", "ctypes.c_int", "ctypes.c_int", "ctypes.c_char_p", "ctypes.POINTER(ctypes.c_int)", "ctypes.c_bool"],
+        argtypes=["ctypes.c_char_p", "ctypes.c_int", "ctypes.c_int", "ctypes.c_char_p", 
+                  "ctypes.POINTER(ctypes.c_int)", "ctypes.c_bool"],
         has_result=True,
-        args=[temp_file_path, body.simulation_type, 1, body.starting_state or "", body.nsteps or 0, False] 
+        args=[temp_file_path, simulation_type.value, 1, starting_state or "",
+              nsteps or 0, not simulation_type == SimulationType.ONESTEP] 
     )
-    #remove last newline character and quotes from result
-    result = result.strip()
 
-    # print("Output: " + output)
-    # print("Result: " + result)
-
-
-    return Response(content=result, media_type="application/json")
+    return result
 
 
     
