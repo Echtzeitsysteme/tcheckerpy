@@ -23,49 +23,32 @@ You can install `tcheckerpy` via PyPI:
 pip install tcheckerpy
 ```
 
-## Usage
-
-To use any of the supported tools, import the corresponding router and call the associated function.
-Each function expects the system declaration of your timed automata network(s) as a string input.
-You may also provide additional arguments by creating a parameter object specific to the selected tool.
-Return values are in the form of either a string, a dict of strings, or a Response object.  
-Most tools (except tck-syntax) require the use of Python's asyncio to run the functions asynchronously.
-
-## Example
+## Usage Example
 
 ```python
 
-# import required routers
-from tcheckerpy.routers import tck_reach, tck_syntax
-import asyncio
+# import required tools
+from tcheckerpy.tools import tck_reach, tck_syntax
 
 # read declaration of timed automata network from .txt or .tck file into string
 with open(system_declaration_path) as file:
         system = file.read()
 
-# check syntax
-syntax_check = tck_syntax.check(system)["status"] == "success" # convert to bool
+# raise error if syntax is incorrect
+tck_syntax.check(system)
 
-# define reachability analysis parameters
-reach_body = tck_reach.TckReachBody(
-    sysdecl=system, 
-    labels="", 
-    algorithm=0,
-    search_order="bfs",
-    certificate=0
-)
-
-# perform reachability analysis if syntax is valid
-if(syntax_check):
-    reachability_result = asyncio.run(tck_reach.reach(reach_body))
-    print(reachability_result["stats"])
-    print(reachability_result["certificate"])
+# perform reachability analysis
+result, stats, certificate = tck_reach.reach(system, tck_reach.Algorithm.REACH, certificate = tck_reach.Certificate.GRAPH)
+print(result)
+print(stats)
+print(certificate)
 
 ```
 
 Example output (based on [ad94.txt](https://github.com/Echtzeitsysteme/tchecker/blob/master/examples/ad94.txt)):
 
 ```
+False
 MEMORY_MAX_RSS 41116
 REACHABLE false
 RUNNING_TIME_SECONDS 6.1474e-05

@@ -3,10 +3,20 @@ from enum import Enum
 from tcheckerpy.utils import call_tchecker
 
 class Relationship(Enum):
-    STRONG_TIMED_BISIM = 0
+    STRONG_TIMED_BISIM = 0 # strong timed bisimilarity
 
 def compare(first_sys_decl: str, second_sys_decl: str, relationship: Relationship = Relationship.STRONG_TIMED_BISIM, 
-            block_size: int | None = None, table_size: int | None = None):
+            block_size: int | None = None, table_size: int | None = None) -> tuple[bool, str, str]:
+    """
+    Checks for bisimilarity of two timed automata.
+
+    :param first_sys_decl: system declaration of first timed automaton
+    :param second_sys_decl: system declaration of second timed automaton
+    :param relationship: relationship to be checked (so far only strong timed bisimilarity is supported)
+    :param block_size: block size for internal computation
+    :param table_size: table size for internal computation
+    :return: result of bisimilarity check, statistics and witness
+    """
     
     with tempfile.NamedTemporaryFile(delete=False) as temp_file_first_sysdecl:
         temp_file_first_sysdecl.write(first_sys_decl.encode('utf-8'))

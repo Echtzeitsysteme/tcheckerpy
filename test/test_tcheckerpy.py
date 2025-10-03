@@ -1,6 +1,7 @@
-from tcheckerpy.routers import tck_compare, tck_liveness, tck_reach, tck_simulate, tck_syntax
+from tcheckerpy.tools import tck_compare, tck_liveness, tck_reach, tck_simulate, tck_syntax
 import os
 
+# test systems and oracle
 test_systems_path = os.path.join(os.path.dirname(__file__), "examples")
 with open(os.path.join(test_systems_path, "ad94.tck")) as file:
     system = file.read()
@@ -26,7 +27,7 @@ def test_tck_liveness():
     assert result[2] == ""
 
 def test_tck_reach():
-    assert not tck_reach.reach(system, tck_reach.Algorithm.COUVSCC)[0]
+    assert not tck_reach.reach(system, tck_reach.Algorithm.REACH)[0]
 
 def test_tck_simulate():
     assert tck_simulate.simulate_tck(system, simulation_type=tck_simulate.SimulationType.ONESTEP) == first_step

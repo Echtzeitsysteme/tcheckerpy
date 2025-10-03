@@ -41,11 +41,7 @@ def call_tchecker_function_in_new_process(
         "--args", args_json,
     ]
 
-    proc = subprocess.run(
-        cmd,
-        capture_output=True,
-        text=True
-    )
+    proc = subprocess.run(cmd, capture_output=True, text=True)
 
     if proc.returncode != 0:
         print(proc.stdout)
