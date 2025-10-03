@@ -4,6 +4,8 @@ import os
 test_systems_path = os.path.join(os.path.dirname(__file__), "examples")
 with open(os.path.join(test_systems_path, "ad94.tck")) as file:
     system = file.read()
+with open(os.path.join(test_systems_path, "ad94_witness.gv")) as file:
+    witness = file.read()
 with open(os.path.join(test_systems_path, "ad94_first_step.json")) as file:
     first_step = file.read()
 with open(os.path.join(test_systems_path, "ad94.gv")) as file:
@@ -14,7 +16,9 @@ with open(os.path.join(test_systems_path, "ad94_product.tck")) as file:
     product = file.read()
 
 def test_tck_compare():
-    assert tck_compare.compare(system, system)[0]
+    result = tck_compare.compare(system, system)
+    assert result[0]
+    assert result[2] == witness
 
 def test_tck_liveness():
     result = tck_liveness.liveness(system, tck_liveness.Algorithm.COUVSCC)
