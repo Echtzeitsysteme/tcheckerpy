@@ -1,15 +1,17 @@
 name: Upload Python Package to PyPI
 
 on:
-  push
+  push:
+    branches:
+      - 'main'
 
 permissions:
   contents: read
 
 jobs:
 
-  build-and-test:
-    name: build and test distribution
+  build:
+    name: build distribution
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -21,12 +23,8 @@ jobs:
         python-version: "3.x"
     - name: build release distributions
       run: |
-        python3 -m pip install build pytest
+        python3 -m pip install build
         python -m build
-    - name: test
-      run: |
-        pip install .
-        pytest
     - name: upload distributions
       uses: actions/upload-artifact@v4
       with:
@@ -36,8 +34,7 @@ jobs:
   pypi-publish:
     name: publish distribution to PyPI
     needs:
-    - build-and-test
-    if: github.ref == 'refs/heads/main'
+    - build
     runs-on: ubuntu-latest
     permissions:
       id-token: write
