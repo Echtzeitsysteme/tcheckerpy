@@ -30,7 +30,7 @@ def test_tck_reach():
     assert not tck_reach.reach(system, tck_reach.Algorithm.REACH)[0]
 
 def test_tck_simulate():
-    assert tck_simulate.simulate_tck(system, simulation_type=tck_simulate.SimulationType.ONESTEP) == first_step
+    assert tck_simulate.one_step_simulation(system) == first_step
 
 def test_tck_syntax():
     tck_syntax.check(system)
