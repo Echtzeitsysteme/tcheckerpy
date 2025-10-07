@@ -14,7 +14,7 @@ class Certificate(Enum):
 def liveness(sys_decl: str, algorithm: Algorithm, certificate: Certificate = Certificate.NONE, 
              labels: list[str] = [], block_size: int | None = None, table_size: int | None = None) -> tuple[bool, str, str]:
     """
-    Checks for liveness of timed automaton.
+    Checks whether timed automaton contains a cycle.
 
     :param sys_decl: system declaration of timed automaton
     :param algorithm: algorithm to be used (see `tck_liveness.Algorithm`)
@@ -22,7 +22,7 @@ def liveness(sys_decl: str, algorithm: Algorithm, certificate: Certificate = Cer
     :param labels: list of accepting labels
     :param block_size: block size for internal computation
     :param table_size: table size for internal computation
-    :return: result of liveness check, statistics and certificate
+    :return: result of liveness check (True iff timed automaton contains cycle), statistics and certificate
     """
 
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
@@ -42,4 +42,4 @@ def liveness(sys_decl: str, algorithm: Algorithm, certificate: Certificate = Cer
               block_size, table_size]
     )
 
-    return "CYCLE false" in stats, stats, cert
+    return "CYCLE true" in stats, stats, cert

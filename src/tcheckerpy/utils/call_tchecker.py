@@ -43,10 +43,8 @@ def call_tchecker_function_in_new_process(
 
     proc = subprocess.run(cmd, capture_output=True, text=True)
 
-    if proc.returncode != 0:
-        print(proc.stdout)
-        print(f"Error calling tchecker function: {proc.stderr.strip()}")
-        raise RuntimeError(f"Child process failed: {proc.stderr.strip()} {proc.returncode}")
+    if proc.returncode != 0 or "ERROR" in proc.stderr:
+        raise RuntimeError(f"Child process failed: {proc.stderr.strip()}, returncode: {proc.returncode}")
 
     result = None
     if has_result:

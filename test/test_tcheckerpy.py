@@ -17,13 +17,13 @@ with open(os.path.join(test_systems_path, "ad94_product.tck")) as file:
     product = file.read()
 
 def test_tck_compare():
-    result = tck_compare.compare(system, system)
+    result = tck_compare.compare(system, system, generate_witness = True)
     assert result[0]
     assert result[2] == witness
 
 def test_tck_liveness():
     result = tck_liveness.liveness(system, tck_liveness.Algorithm.COUVSCC)
-    assert result[0]
+    assert not result[0]
     assert result[2] == ""
 
 def test_tck_reach():

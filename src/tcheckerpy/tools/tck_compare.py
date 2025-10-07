@@ -6,7 +6,7 @@ class Relationship(Enum):
     STRONG_TIMED_BISIM = 0 # strong timed bisimilarity
 
 def compare(first_sys_decl: str, second_sys_decl: str, relationship: Relationship = Relationship.STRONG_TIMED_BISIM, 
-            block_size: int | None = None, table_size: int | None = None) -> tuple[bool, str, str]:
+            generate_witness = False, block_size: int | None = None, table_size: int | None = None) -> tuple[bool, str, str]:
     """
     Checks for bisimilarity of two timed automata.
 
@@ -32,7 +32,7 @@ def compare(first_sys_decl: str, second_sys_decl: str, relationship: Relationshi
                   "ctypes.POINTER(ctypes.c_int)", "ctypes.POINTER(ctypes.c_int)", "ctypes.c_bool"],
         has_result=True,
         args=[temp_file_path_first_sysdecl, temp_file_path_second_sysdecl, relationship.value, 
-              block_size, table_size, True]
+              block_size, table_size, generate_witness]
     )
 
     return "RELATIONSHIP_FULFILLED true" in stats, stats, witness
