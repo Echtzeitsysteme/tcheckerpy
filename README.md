@@ -11,10 +11,6 @@ It provides access to the following TChecker tools:
 
 For detailed documentation, refer to the [TChecker Wiki](https://github.com/ticktac-project/tchecker/wiki/Using-TChecker).
 
-## Dependencies
-
-To run `tcheckerpy`, the [Boost library](https://www.boost.org/releases/1.81.0/) version 1.81.0 or higher must be installed.
-
 ## Installation
 
 You can install `tcheckerpy` via PyPI:
