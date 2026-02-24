@@ -3,11 +3,11 @@ from enum import Enum
 from tcheckerpy.utils import call_tchecker
 
 class __SimulationType(Enum):
-    INTERACTIVE_SIMULATION = 0,        # Interactive simulation 
-    ONESTEP_SIMULATION = 1,            #  One-step simulation
-    RANDOMIZED_SIMULATION = 2,         # Randomized simulation
-    CONCRETE_SIMULATION = 3,           # Concrete simulation
-    CONCRETE_ONESTEP_SIMULATION = 4,   # Concrete one-step simulation
+    INTERACTIVE_SIMULATION = 0         # Interactive simulation 
+    ONESTEP_SIMULATION = 1             # One-step simulation
+    RANDOMIZED_SIMULATION = 2          # Randomized simulation
+    CONCRETE_SIMULATION = 3            # Concrete simulation
+    CONCRETE_ONESTEP_SIMULATION = 4    # Concrete one-step simulation
     CONCRETE_RANDOMIZED_SIMULATION = 5 # Concrete randomized simulation
 
 def __call_tck_simulate(sys_decl: str, simulation_type: __SimulationType, nsteps: int,
