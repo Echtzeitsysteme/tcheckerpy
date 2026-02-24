@@ -35,6 +35,6 @@ python_files = "test_tcheckerpy.py"
 
 [tool.setuptools-git-versioning]
 enabled = true
-template = "{timestamp:%Y.%m.%d}"
-dev_template = "{timestamp:%Y.%m.%d}"
-dirty_template = "{timestamp:%Y.%m.%d}"
+template = "{timestamp:%Y.%m.%d-%H-%M-%S}"
+dev_template = "{timestamp:%Y.%m.%d-%H-%M-%S}"
+dirty_template = "{timestamp:%Y.%m.%d-%H-%M-%S}"
