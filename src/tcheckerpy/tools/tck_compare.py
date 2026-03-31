@@ -43,7 +43,7 @@ def compare(first_sys_decl: str, second_sys_decl: str, relationship: Relationshi
             ctypes.c_char_p,  # starting_state_attributes_second
             ctypes.c_char_p,  # inter_constraint
             ctypes.c_bool     # generate_witness
-        ]
+        ],
         has_result=True,
         args=[temp_file_path_first_sysdecl, temp_file_path_second_sysdecl, relationship.value, 
               block_size, table_size, None, None, None, generate_witness]
