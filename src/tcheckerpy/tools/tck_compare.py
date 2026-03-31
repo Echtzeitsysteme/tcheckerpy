@@ -33,16 +33,16 @@ def compare(first_sys_decl: str, second_sys_decl: str, relationship: Relationshi
     stats, witness = call_tchecker.call_tchecker_function_in_new_process(
         func_name="tck_compare",
         argtypes = [
-            ctypes.c_char_p,  # output_filename
-            ctypes.c_char_p,  # first_sysdecl_filename
-            ctypes.c_char_p,  # second_sysdecl_filename
-            ctypes.c_int,     # relationship
-            ctypes.POINTER(ctypes.c_int),  # block_size
-            ctypes.POINTER(ctypes.c_int),  # table_size
-            ctypes.c_char_p,  # starting_state_attributes_first
-            ctypes.c_char_p,  # starting_state_attributes_second
-            ctypes.c_char_p,  # inter_constraint
-            ctypes.c_bool     # generate_witness
+            "ctypes.c_char_p",  # output_filename
+            "ctypes.c_char_p",  # first_sysdecl_filename
+            "ctypes.c_char_p",  # second_sysdecl_filename
+            "ctypes.c_int",     # relationship
+            "ctypes.POINTER(ctypes.c_int)",  # block_size
+            "ctypes.POINTER(ctypes.c_int)",  # table_size
+            "ctypes.c_char_p",  # starting_state_attributes_first
+            "ctypes.c_char_p",  # starting_state_attributes_second
+            "ctypes.c_char_p",  # inter_constraint
+            "ctypes.c_bool"     # generate_witness
         ],
         has_result=True,
         args=[temp_file_path_first_sysdecl, temp_file_path_second_sysdecl, relationship.value, 
