@@ -33,7 +33,6 @@ def compare(first_sys_decl: str, second_sys_decl: str, relationship: Relationshi
     stats, witness = call_tchecker.call_tchecker_function_in_new_process(
         func_name="tck_compare",
         argtypes = [
-            "ctypes.c_char_p",  # output_filename
             "ctypes.c_char_p",  # first_sysdecl_filename
             "ctypes.c_char_p",  # second_sysdecl_filename
             "ctypes.c_int",     # relationship
